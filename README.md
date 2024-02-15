@@ -49,4 +49,5 @@ e.g<br />
    \- /etc/nginx/sites-enabled/default<br />
 
 
-   
+#### Etc:
+This is really just for my needs, any inevitable security oversights don't apply to me. But please feel free to point them out.
