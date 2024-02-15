@@ -50,24 +50,16 @@ while getopts ":s:d:u :x" option; do
   esac
 done
 
-read -p "// Debugging pause ..."
-
 apt-get update
 nginx -v >/dev/null 2>&1 || log "// Installing Nginx ..."; apt-get install -y nginx
-
-read -p "// Debugging pause ..."
 
 files=("/var/www/default" "/etc/nginx/sites-available/default" "/etcs/nginx/sites-enabled/default")
 for file in "${files[@]}"; do
     [ -f "$file" ] || [ -d "$file" ] && rm "$file" && log "// Deleting $file ..." || log "// WARN: $file does not exist ..."
 done
 
-read -p "// Debugging pause ..."
-
 log "// Empty index.html created in root dir ..."
 echo "Webserver installed and configured." >> /var/www/$site/index.html
-
-read -p "// Debugging pause ..."
 
 cat <<EOF >> /etc/nginx/sites-available/$site
 server {
@@ -81,12 +73,8 @@ server {
 }
 EOF
 
-read -p "// Debugging pause ..."
-
 ln -s $block /etc/nginx/sites-enabled/$site && log "// Symbolic link created ..."
 systemctl restart nginx && log "// Restarted Nginx ..."
-
-read -p "// Debugging pause ..."
 
 #$ssl && {
  # apt install python3-acme python3-certbot python3-mock python3 openssl python3-pkg-resources python3-pyparsing python3-zope.interface -y 
@@ -99,7 +87,5 @@ $ufw && {
   yes | ufw enable
   ufw status | grep -qE '(80|443|22)/tcp' || ufw allow 80,443,22/tcp
 }
-
-read -p "// Debugging pause ..."
 
 ! $keep_log && { echo "// Deleting log file: $LOG_FILE ..."; rm -R "$LOG_FILE"; }
