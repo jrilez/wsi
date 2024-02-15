@@ -39,14 +39,26 @@ e.g<br />
 
 #### Outline:
 
-1. Creates log file if one doesn't exist
-2. Verifies that script was run as root
+
+1. Verifies that script was run as root
+2. Creates log file if one doesn't exist
 3. Checks flags
 4. Installs nginx
 5. Deletes default nginx files<br />
-   \- /var/www/default<br />
-   \- /etc/nginx/sites-available/default<br />
-   \- /etc/nginx/sites-enabled/default<br />
+  \- /var/www/default<br />
+  \- /etc/nginx/sites-available/default<br />
+  \- /etc/nginx/sites-enabled/default<br />
+6. Creates new generic nginx files<br />
+  \- /var/www/$site/index.html<br />
+  \- /etc/nginx/sites-available/$site<br />
+  \- /etc/nginx/sites-enabled/$site<br />
+7. Creates *sites-available* to *sites-enabled* symlink
+8. Restarts nginx
+9. Installs and configures SSL if elected
+  \- Installs certbot and python3 dependencies
+11. Installs and configures UFW if elected
+  \- Opens 22, 80 and 443
+12. Deletes log file if elected
 
 
 #### Etc:
