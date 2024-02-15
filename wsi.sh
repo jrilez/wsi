@@ -76,11 +76,11 @@ EOF
 ln -s $block /etc/nginx/sites-enabled/$site && log "// Symbolic link created ..."
 systemctl restart nginx && log "// Restarted Nginx ..."
 
-#$ssl && {
- # apt install python3-acme python3-certbot python3-mock python3 openssl python3-pkg-resources python3-pyparsing python3-zope.interface -y 
- # apt install python3-certbot-nginx 
- # certbot --nginx -d $site
-#}
+$ssl && {
+  apt install python3-acme python3-certbot python3-mock python3 openssl python3-pkg-resources python3-pyparsing python3-zope.interface -y 
+  apt install python3-certbot-nginx 
+  certbot --nginx -d $site
+}
 
 $ufw && {
   apt install ufw -y
