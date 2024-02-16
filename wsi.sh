@@ -21,7 +21,7 @@ keep_log=true
 while getopts ":s:d:u :x" option; do
   case $option in
     s)
-      ssl=true
+      ssl="true"
       email="$OPTARG"
       [[ ! "$OPTARG" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]] && echo "ERROR: $OPTARG is an invalid email, EXIT ..." && exit 1
       log "// SSL configuration enabled ..."
@@ -31,8 +31,6 @@ while getopts ":s:d:u :x" option; do
       [[ ! "$OPTARG" =~ ^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$ ]] && log "// ERROR: $OPTARG is an invalid domain, EXIT ..." && exit 1
       [ -d "/var/www/$OPTARG" ] && log "// ERROR: Directory '$OPTARG' exists, EXIT ..." && exit 1
       site="$OPTARG"
-      site_root="/var/www/$site"
-      mkdir $site_root
       block="/etc/nginx/sites-available/$site"
       log "// Site/domain set to $OPTARG, root directory created ..."
       ;;
@@ -52,10 +50,11 @@ done
 
 apt-get update
 nginx -v >/dev/null 2>&1 || log "// Installing Nginx ..."; apt-get install -y nginx
+mkdir /var/www/$site; log "// Site root created ..."
 
-files=("/var/www/default" "/etc/nginx/sites-available/default" "/etcs/nginx/sites-enabled/default")
+files=(/var/www/html /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default)
 for file in "${files[@]}"; do
-    [ -f "$file" ] || [ -d "$file" ] && rm "$file" && log "// Deleting $file ..." || log "// WARN: $file does not exist ..."
+    [ -f "$file" ] || [ -d "$file" ] && rm -R "$file" && log "// Deleting $file ..." || log "// WARN: $file does not exist ..."
 done
 
 log "// Empty index.html created in root dir ..."
@@ -79,7 +78,7 @@ systemctl restart nginx && log "// Restarted Nginx ..."
 $ssl && {
   apt install python3-acme python3-certbot python3-mock python3 openssl python3-pkg-resources python3-pyparsing python3-zope.interface -y 
   apt install python3-certbot-nginx 
-  certbot --nginx -d $site
+  certbot --nginx --no-eff-email --non-interactive --agree-tos --email $email -d $site
 }
 
 $ufw && {
@@ -89,3 +88,5 @@ $ufw && {
 }
 
 ! $keep_log && { echo "// Deleting log file: $LOG_FILE ..."; rm -R "$LOG_FILE"; }
+
+log " // END ..."
