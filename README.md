@@ -75,8 +75,8 @@ Simple bash script to delete all Nginx-configured sites
 - /var/www/*
 - /etc/nginx/sites-available/*
 - /etc/nginx/sites-enabled/*
-- /etc/letsencrypt/live/*
-or
+- /etc/letsencrypt/live/*<br />
+or<br />
 - /var/www/[SPECIFIED SITE]
 - /etc/nginx/sites-available/[SPECIFIED SITE]
 - /etc/nginx/sites-enabled/[SPECIFIED SITE]
