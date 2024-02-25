@@ -94,4 +94,4 @@ $ufw && {
 
 ! $keep_log && { echo "// Deleting log file: $LOG_FILE ..."; rm -R "$LOG_FILE"; }
 
-log " // END ..."
+log "// END ..."

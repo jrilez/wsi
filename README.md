@@ -3,7 +3,7 @@
 
 Simple bash script to install and configure Nginx on Debian. Also configures SSL if elected.
 
-#### Installs:
+#### Installs
 - nginx
 
 *optional*:
@@ -19,7 +19,7 @@ Simple bash script to install and configure Nginx on Debian. Also configures SSL
   - zope.interface
   - certbot-nginx
 
-#### Usage:
+#### Usage
 
 `root@web:~# bash wsi.sh [-s email] [-d* site_name] [-u] [-x]`<br />
 **\*** *required*
@@ -37,7 +37,7 @@ e.g<br />
 - -x: delete log file<br />
       *if not used, wsi.log is generated in current directory*
 
-#### Outline:
+#### Outline
 
 
 1. Verifies that script was run as root
@@ -63,3 +63,41 @@ e.g<br />
 
 #### Etc:
 This is really just for my needs, any inevitable security oversights don't apply to me. But please feel free to point them out.
+
+---
+
+# WSC.sh
+<ins>W</ins>eb<ins>s</ins>erver <ins>C</ins>leaner
+
+Simple bash script to delete all Nginx-configured sites
+
+#### Deletes
+- /var/www/*
+- /etc/nginx/sites-available/*
+- /etc/nginx/sites-enabled/*
+- /etc/letsencrypt/live/*
+or
+- /var/www/[SPECIFIED SITE]
+- /etc/nginx/sites-available/[SPECIFIED SITE]
+- /etc/nginx/sites-enabled/[SPECIFIED SITE]
+- /etc/letsencrypt/live/[SPECIFIED SITE]
+
+#### Usage
+`root@web:~# bash wsc.sh [-f] [-a] [-s site_name] [-x]`<br />
+
+e.g<br />
+`root@web:~# bash wsc.sh -fax`
+*suppresses warning, deletes all site, deletes log*
+
+or
+
+`root@web:~# bash wsc.sh -f -s example.com`
+*suppresses warning, deletes `example.com`*
+
+- -f: suppress warning prompts<br />
+- -a: delete ALL sites<br />
+- -s: specify site<br />
+- -x: delete log file<br />
+      *if not used, wsc.log is generated in current directory*
+
+
