@@ -1,6 +1,6 @@
 #!/bin/bash
-# // wsi.sh
-# // justin riley
+# // Webserver Installer
+# // https://github.com/jrilez/wsi
 # //
 
 [[ ! "$(id -u)" -eq 0 ]] && echo "ERROR: Must be run as root, EXIT ..."
@@ -28,7 +28,7 @@ while getopts ":s:d:u :x" option; do
       log "// Email set to $OPTARG ..."
       ;;
     d)
-      [[ ! "$OPTARG" =~ ^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$ ]] && log "// ERROR: $OPTARG is an invalid domain, EXIT ..." && exit 1
+      [[ $ssl = "true" && ! "$OPTARG" =~ ^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$ ]] && log "// ERROR: $OPTARG is an invalid domain, EXIT ..." && exit 1
       [ -d "/var/www/$OPTARG" ] && log "// ERROR: Directory '$OPTARG' exists, EXIT ..." && exit 1
       site="$OPTARG"
       block="/etc/nginx/sites-available/$site"
@@ -60,7 +60,10 @@ done
 log "// Empty index.html created in root dir ..."
 echo "Webserver installed and configured." >> /var/www/$site/index.html
 
-cat <<EOF >> /etc/nginx/sites-available/$site
+if grep -q "server {" /etc/nginx/sites-available/$site; then
+    echo "// WARN: Server block already exists. No changes made ..."
+else
+    cat <<EOF >> /etc/nginx/sites-available/$site
 server {
     listen 80;
     root /var/www/$site;
@@ -71,6 +74,8 @@ server {
     }
 }
 EOF
+    log "// Server block inserted into Nginx configuration file ..."
+fi
 
 ln -s $block /etc/nginx/sites-enabled/$site && log "// Symbolic link created ..."
 systemctl restart nginx && log "// Restarted Nginx ..."
