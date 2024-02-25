@@ -69,7 +69,7 @@ This is really just for my needs, any inevitable security oversights don't apply
 # WSC.sh
 <ins>W</ins>eb<ins>s</ins>erver <ins>C</ins>leaner
 
-Simple bash script to delete all Nginx-configured sites
+Simple bash script to delete all, or one, Nginx-configured sites
 
 #### Deletes
 - /var/www/*
