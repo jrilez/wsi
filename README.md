@@ -1,4 +1,4 @@
-# WSI.sh
+### WSI.sh
 <ins>W</ins>eb<ins>s</ins>erver <ins>I</ins>nstaller
 
 Simple bash script to install and configure Nginx on Debian. Also configures SSL if elected.
@@ -66,7 +66,7 @@ This is really just for my needs, any inevitable security oversights don't apply
 
 ---
 
-# WSC.sh
+### WSC.sh
 <ins>W</ins>eb<ins>s</ins>erver <ins>C</ins>leaner
 
 Simple bash script to delete all, or one, Nginx-configured sites
@@ -100,4 +100,7 @@ or
 - -x: delete log file<br />
       *if not used, wsc.log is generated in current directory*
 
+### NXR.sh
+<ins>N</ins>gin<ins>x</ins> <ins>R</ins>emover
 
+Removes all traces of `nginx`
