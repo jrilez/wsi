@@ -54,7 +54,7 @@ mkdir /var/www/$site; log "// Site root created ..."
 
 files=(/var/www/html /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default)
 for file in "${files[@]}"; do
-    [ -f "$file" ] || [ -d "$file" ] && rm -R "$file" && log "// Deleting $file ..." || log "// WARN: $file does not exist ..."
+    [ -f "$file" ] || [ -d "$file" ] && sudo rm -R "$file" && log "// Deleting $file ..." || log "// WARN: $file does not exist ..."
 done
 
 log "// Empty index.html created in root dir ..."
@@ -78,7 +78,7 @@ EOF
 fi
 
 ln -s $block /etc/nginx/sites-enabled/$site && log "// Symbolic link created ..."
-systemctl restart nginx && log "// Restarted Nginx ..."
+sudo systemctl restart nginx && log "// Restarted Nginx ..."
 
 $ssl && {
   apt install python3-acme python3-certbot python3-mock python3 openssl python3-pkg-resources python3-pyparsing python3-zope.interface -y 
