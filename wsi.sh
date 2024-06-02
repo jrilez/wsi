@@ -54,7 +54,16 @@ mkdir /var/www/$site; log "// Site root created ..."
 
 files=(/var/www/html /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default)
 for file in "${files[@]}"; do
-    [ -f "$file" ] || [ -d "$file" ] && sudo rm -R "$file" && log "// Deleting $file ..." || log "// WARN: $file does not exist ..."
+    if [ -e "$file" ]; then
+        sudo rm -R "$file"
+        if [ $? -eq 0 ]; then
+            log "// Deleting $file ..."
+        else
+            log "// ERROR: Failed to delete $file ..."
+        fi
+    else
+        log "// WARN: $file does not exist ..."
+    fi
 done
 
 log "// Empty index.html created in root dir ..."
