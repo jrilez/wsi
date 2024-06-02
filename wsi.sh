@@ -52,19 +52,10 @@ apt-get update
 nginx -v >/dev/null 2>&1 || log "// Installing Nginx ..."; apt-get install -y nginx
 mkdir /var/www/$site; log "// Site root created ..."
 
-files=(/var/www/html /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default)
-for file in "${files[@]}"; do
-    if [ -e "$file" ]; then
-        sudo rm -R "$file"
-        if [ $? -eq 0 ]; then
-            log "// Deleting $file ..."
-        else
-            log "// ERROR: Failed to delete $file ..."
-        fi
-    else
-        log "// WARN: $file does not exist ..."
-    fi
-done
+# tried using a for loop but it kept missing /etc/nginx/sites-enabled/default for some reason
+sudo rm "/var/www/html" && echo "// Deleted /var/www/html"
+sudo rm "/etc/nginx/sites-available/default" && echo "// Deleted /etc/nginx/sites-available/default"
+sudo rm "/etc/nginx/sites-enabled/default" && echo "// Deleted /etc/nginx/sites-enabled/default"
 
 log "// Empty index.html created in root dir ..."
 echo "Webserver installed and configured." >> /var/www/$site/index.html
