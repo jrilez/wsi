@@ -3,7 +3,7 @@
 # // https://github.com/jrilez/wsi
 # //
 
-[[ ! "$(id -u)" -eq 0 ]] && echo "ERROR: Must be run as root, EXIT ..."
+[[ ! "$(id -u)" -eq 0 ]] && echo "ERROR: Must be run as root, EXIT ..." && exit 1
 
 LOG_FILE="wsi.log"
 [[ ! -f "$LOG_FILE" ]] && touch "$LOG_FILE"
