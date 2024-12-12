@@ -21,8 +21,7 @@ Simple bash script to install and configure Nginx on Debian. Also configures SSL
 
 #### Usage
 
-`root@web:~# bash wsi.sh [-s email] [-d* site_name] [-u] [-x]`<br />
-**\*** *required*
+`root@web:~# bash wsi.sh [-s email] [-d site_name] [-u] [-x]`<br />
 
 e.g<br />
 `root@web:~# bash wsi.sh -s user@example.com -d example.com -u -x`
@@ -31,7 +30,7 @@ e.g<br />
       - *email required for certbot*<br />
       - *must have A records configured in DNS provider*
 - -d: site name<br />
-      *must be valid domain name if SSL enabled*
+      *must be valid domain name if SSL enabled* *REQUIRED
 - -u: enable UFW installation<br />
       *allows port 80 (HTTP), 443 (HTTPS) and 22 (SSH)*
 - -x: delete log file<br />
