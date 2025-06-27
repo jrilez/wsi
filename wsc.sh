@@ -31,7 +31,7 @@ while getopts "fas:" option; do
             log "// Deleting ALL sites ..."
             directories=(/var/www /etc/nginx/sites-available /etc/nginx/sites-enabled /etc/letsencrypt/live)
             for directory in "${directories[@]}"; do
-                [ -d "$directory" ] && rm -R $directory/*
+                [ -d "$directory" ] && rm -rf "$directory"/*
             done
             log "// END ..."
             exit 1
@@ -51,7 +51,7 @@ while getopts "fas:" option; do
             log "// Deleting $OPTARG ..."
             directories=(/var/www /etc/nginx/sites-available /etc/nginx/sites-enabled /etc/letsencrypt/live)
             for directory in "${directories[@]}"; do
-                [ -d "$directory" ] && rm -R $directory/$OPTARG
+                [ -d "$directory" ] && rm -rf "$directory"/"$OPTARG"
             done
             log "// END ..."
             exit 1
